@@ -1,0 +1,2721 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রিমিয়াম শপ - অনলাইন শপিং</title>
+    <style>
+        /* গ্লোবাল স্টাইল */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        /* হেডার স্টাইল */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-right: 30px;
+            color: #fff;
+        }
+        
+        .search-bar {
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: #e74c3c;
+            border: none;
+            color: white;
+            padding: 7px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background: #c0392b;
+        }
+        
+        .user-actions {
+            display: flex;
+            margin-left: 20px;
+        }
+        
+        .user-actions a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .user-actions a:hover {
+            transform: translateY(-3px);
+        }
+        
+        .user-actions i {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        /* নেভিগেশন বার */
+        nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            padding: 12px 20px;
+            overflow-x: auto;
+        }
+        
+        .nav-item {
+            margin-right: 25px;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            white-space: nowrap;
+            padding: 5px 0;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            color: #3498db;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        /* প্রোমো ব্যানার */
+        .promo-banner {
+            background: linear-gradient(to right, #e74c3c, #f39c12);
+            color: white;
+            padding: 12px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        /* মেইন কন্টেন্ট */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: #3498db;
+            border-radius: 2px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #e74c3c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .product-img-container {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            height: 40px;
+            overflow: hidden;
+        }
+        
+        .price-container {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+        
+        .current-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: #95a5a6;
+            margin-left: 10px;
+            font-size: 1rem;
+        }
+        
+        .discount {
+            background: #f39c12;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        
+        .order-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background 0.3s;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .order-btn i {
+            margin-right: 8px;
+        }
+        
+        .order-btn:hover {
+            background: #2980b9;
+        }
+        
+        /* পেমেন্ট মোডাল */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            animation: modalFadeIn 0.3s;
+        }
+        
+        .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+        
+
+        
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+        }
+        
+        .close-btn {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #95a5a6;
+            transition: color 0.3s;
+        }
+        
+        .close-btn:hover {
+            color: #e74c3c;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-method:hover, .payment-method.selected {
+            border-color: #3498db;
+            background: #f0f8ff;
+        }
+        
+        .payment-method img {
+            width: 50px;
+            height: 30px;
+            object-fit: contain;
+            margin-right: 15px;
+        }
+        
+        .payment-details {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .submit-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: #219653;
+        }
+        
+        .contact-info {
+            margin-top: 30px;
+            padding: 15px;
+            background: #f1f1f1;
+            border-radius: 8px;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .contact-info p {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        /* ফুটার */
+        footer {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #3498db;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            display: block;
+            padding: 5px 0;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #3498db;
+            padding-left: 5px;
+        }
+        
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .payment-method-small {
+            width: 60px;
+            height: 35px;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+        
+        .payment-method-small img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #34495e;
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+
+        
+            /* Popup Modal Styles */
+    .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        z-index: 3000;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .popup-content {
+        background: white;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+        animation: modalFadeIn 0.3s;
+    }
+    
+    .popup-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .popup-header h2 {
+        color: #2c3e50;
+        font-size: 1.3rem;
+        margin: 0;
+    }
+    
+    .close-popup {
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: #95a5a6;
+        transition: color 0.3s;
+    }
+    
+    .close-popup:hover {
+        color: #e74c3c;
+    }
+    
+    .popup-body {
+        padding: 20px;
+    }
+    
+    .popup-body h3 {
+        color: #2c3e50;
+        margin-bottom: 15px;
+    }
+    
+    .popup-body p {
+        margin-bottom: 10px;
+        line-height: 1.6;
+    }
+    
+    .popup-body ul {
+        margin: 15px 0;
+        padding-left: 20px;
+    }
+    
+    .popup-body li {
+        margin-bottom: 8px;
+    }
+        
+
+
+    /* কার্ট মোডাল স্টাইল */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    padding: 20px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.cart-count {
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.order-list {
+    margin-bottom: 20px;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.order-summary {
+    border-top: 2px solid #ddd;
+    padding-top: 15px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.summary-row.total {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 12px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    .message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+.error {
+    background-color: #ffdddd;
+    color: #ff0000;
+}
+.success {
+    background-color: #ddffdd;
+    color: #008000;
+}
+        /* রেস্পন্সিভ স্টাইল */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .logo {
+                margin: 0 0 15px 0;
+                text-align: center;
+                width: 100%;
+            }
+            
+            .search-bar {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .user-actions {
+                width: 100%;
+                justify-content: space-around;
+                margin-left: 0;
+            }
+            
+            .nav-container {
+                padding: 10px 15px;
+            }
+            
+            .nav-item {
+                margin-right: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            
+            .product-img-container {
+                height: 160px;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+      <!-- হেডার সেকশন -->
+<header>
+    <div class="header-container">
+        <div class="logo">প্রিমিয়াম শপ</div>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="পণ্য খুঁজুন...">
+            <button id="searchBtn"><i class="fas fa-search"></i> খুঁজুন</button>
+        </div>
+        <div class="user-actions">
+            <a href="#">
+                <i class="fas fa-user"></i>
+                অ্যাকাউন্ট
+            </a>
+            <a href="#" id="cartBtn"> <!-- কার্ট বাটনে ID যোগ করা হয়েছে -->
+                <i class="fas fa-shopping-cart"></i>
+                কার্ট <span class="cart-count">0</span> <!-- কার্ট আইটেম কাউন্ট -->
+            </a>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+
+
+<!-- কার্ট মোডাল -->
+<div class="modal-overlay" id="cartModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>আপনার অর্ডার সমূহ</h2>
+            <span class="close-btn" id="closeCartModal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <!-- অর্ডার লিস্ট -->
+            <div class="order-list" id="orderList">
+                <!-- ডাইনামিকভাবে অর্ডার আইটেম যোগ হবে -->
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>আপনার কার্টে কোনো পণ্য নেই</p>
+                </div>
+            </div>
+            
+            <!-- অর্ডার সামারি -->
+            <div class="order-summary">
+                <div class="summary-row">
+                    <span>মোট পণ্য:</span>
+                    <span id="totalItems">0 টি</span>
+                </div>
+                <div class="summary-row">
+                    <span>ডেলিভারি চার্জ:</span>
+                    <span id="deliveryCharge">100 টাকা</span>
+                </div>
+                <div class="summary-row total">
+                    <span>সর্বমোট:</span>
+                    <span id="grandTotal">0 টাকা</span>
+                </div>
+                <button class="checkout-btn" id="checkoutBtn">
+                    <i class="fas fa-shopping-bag"></i> অর্ডার কনফার্ম করুন
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <!-- নেভিগেশন বার -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-item active" data-category="all">হোম</div>
+            <div class="nav-item" data-category="home">ঘরোয়া পণ্য</div>
+            <div class="nav-item" data-category="offer">অফার</div>
+            <div class="nav-item" data-category="new">নতুন পণ্য</div>
+        </div>
+    </nav>
+    
+    <!-- প্রোমো ব্যানার -->
+    <div class="promo-banner">
+        <i class="fas fa-bolt"></i> ফ্ল্যাশ সেল - ৭০% পর্যন্ত ছাড়! | ফ্রি ডেলিভারি 150 টাকা
+    </div>
+    
+    <!-- মেইন কন্টেন্ট -->
+    <div class="container">
+        <h1 class="section-title" id="categoryTitle">আমাদের সেরা পণ্য</h1>
+        
+        <div class="products-grid" id="products-container">
+            <!-- প্রোডাক্টগুলো জাভাস্ক্রিপ্ট দিয়ে যোগ করা হবে -->
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="paymentModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>পেমেন্ট সম্পন্ন করুন</h2>
+            <span class="close-btn" id="closeModal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <h2>পেমেন্ট মেথড সিলেক্ট করুন</h2>
+
+            <!-- Cash on Delivery Option -->
+            <div class="payment-method" data-method="cod">
+                <img src="https://t3.ftcdn.net/jpg/14/85/07/58/360_F_1485075855_N3NdCTjJd9XVGzbo2cDj5sTJER0IwwOw.jpg" alt="Cash on Delivery" style="width: 40px;">
+                <div>
+                    <h5>ক্যাশ অন ডেলিভারি</h5>
+                    <p>(COD)</p>
+                </div>
+            </div>
+            
+            <!-- bKash -->
+            <div class="payment-method" data-method="bkash">
+                <img src="https://play-lh.googleusercontent.com/1CRcUfmtwvWxT2g-xJF8s9_btha42TLi6Lo-qVkVomXBb_citzakZX9BbeY51iholWs" alt="bKash">
+                <div>
+                    <h4>bKash</h4>
+                    <p>মোবাইল নম্বর: 01917797839</p>
+                </div>
+            </div>
+            
+            <!-- Nagad -->
+            <div class="payment-method" data-method="nagad">
+                <img src="https://play-lh.googleusercontent.com/9ps_d6nGKQzfbsJfMaFR0RkdwzEdbZV53ReYCS09Eo5MV-GtVylFD-7IHcVktlnz9Mo" alt="Nagad">
+                <div>
+                    <h4>Nagad</h4>
+                    <p>মোবাইল নম্বর: 01403407381</p>
+                </div>
+            </div>
+            
+            <!-- Binance -->
+            <div class="payment-method" data-method="binance">
+                <img src="https://public.bnbstatic.com/20190405/eb2349c3-b2f8-4a93-a286-8f86a62ea9d8.png" alt="Binance" style="width: 40px;">
+                <div>
+                    <h4>Binance Pay</h4>
+                    <p>বাইন্যান্স আইডি: 123442442</p>
+                </div>
+            </div>
+            
+            <!-- Card -->
+            <div class="payment-method" data-method="card">
+                <img src="https://cdn-icons-png.flaticon.com/512/179/179457.png" alt="Card" style="width: 40px;">
+                <div>
+                    <h4>ক্রেডিট/ডেবিট কার্ড</h4>
+                    <p>Visa, Mastercard, Amex</p>
+                </div>
+            </div>
+            
+            <!-- Payment Details (for digital payments) -->
+            <div class="payment-details" id="paymentDetails">
+                <div class="form-group">
+                    <label for="Delivery Fee">ডেলিভারি চার্জ: ঢাকার ভিতরে ১০০ টাকা, ঢাকার বাইরে ১৫০ টাকা</label>
+                
+                </div>   
+                <div class="form-group">
+                    <label for="paymentNumber">আপনার মোবাইল নম্বর</label>
+                    <input type="text" id="paymentNumber" placeholder="পেমেন্ট নম্বর">
+                </div>
+                <div class="form-group">
+                    <label for="transactionId">ট্রানজেকশন আইডি</label>
+                    <input type="text" id="transactionId" placeholder="শেষ ৪ ডিজিট">
+                </div>
+                <div class="form-group">
+                    <label for="amount">পরিমাণ (টাকা)</label>
+                    <input type="number" id="amount" placeholder="পণ্যের মূল্য">
+                </div>
+                <button class="submit-btn" id="submitPayment"><i class="fas fa-check-circle"></i> পেমেন্ট কনফার্ম করুন</button>
+            </div>
+            
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <h3><i class="fas fa-headset"></i> সহায়তা প্রয়োজন?</h3>
+                <p><strong>bKash:</strong> 01917797839 (Personal)</p>
+                <p><strong>Nagad:</strong> 01403407381 (Personal)</p>
+                <p><strong>Binance:</strong> 65221234</p>
+                <p><strong>হেল্পলাইন:</strong> 01403407381</p>
+                <p>পেমেন্টের পর অবশ্যই স্ক্রিনশট পাঠান আমাদের ফেসবুক পেজে</p>
+            </div>
+        </div>
+    </div>
+</div>
+    
+     <!-- ফুটার -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-column">
+            <h3>গ্রাহক সেবা</h3>
+            <ul>
+                <li><a href="#" class="footer-link" data-popup="help-center"><i class="fas fa-question-circle"></i> হেল্প সেন্টার</a></li>
+                <li><a href="#" class="footer-link" data-popup="how-to-order"><i class="fas fa-shopping-cart"></i> কিভাবে অর্ডার করবেন</a></li>
+                <li><a href="#" class="footer-link" data-popup="return-refund"><i class="fas fa-exchange-alt"></i> রিটার্ন ও রিফান্ড</a></li>
+                <li><a href="#" class="footer-link" data-popup="contact-us"><i class="fas fa-phone-alt"></i> যোগাযোগ করুন</a></li>
+                <li><a href="#" class="footer-link" data-popup="terms"><i class="fas fa-file-alt"></i> শর্তাবলী</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>আমাদের সম্পর্কে</h3>
+            <ul>
+                <li><a href="#" class="footer-link" data-popup="about-company"><i class="fas fa-info-circle"></i> কোম্পানি সম্পর্কে</a></li>
+                <li><a href="#" class="footer-link" data-popup="promotions"><i class="fas fa-bullhorn"></i> প্রচার ও অফার</a></li>
+                <li><a href="#" class="footer-link" data-popup="store-location"><i class="fas fa-map-marker-alt"></i> স্টোর লোকেশন</a></li>
+                <li><a href="#" class="footer-link" data-popup="blog"><i class="fas fa-newspaper"></i> ব্লগ</a></li>
+                <li><a href="#" class="footer-link" data-popup="career"><i class="fas fa-briefcase"></i> ক্যারিয়ার</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>অন্যান্য সেবা</h3>
+            <ul>
+                <li><a href="#" class="footer-link" data-popup="sell-with-us"><i class="fas fa-store"></i> আমাদের সাথে বিক্রি করুন</a></li>
+                <li><a href="#" class="footer-link" data-popup="delivery-partner"><i class="fas fa-truck"></i> ডেলিভারি পার্টনার</a></li>
+                <li><a href="#" class="footer-link" data-popup="advertise"><i class="fas fa-ad"></i> বিজ্ঞাপন দিন</a></li>
+                <li><a href="#" class="footer-link" data-popup="gift-card"><i class="fas fa-gift"></i> গিফট কার্ড</a></li>
+                <li><a href="#" class="footer-link" data-popup="affiliate"><i class="fas fa-hands-helping"></i> অ্যাফিলিয়েট প্রোগ্রাম</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-column">
+            <h3>যোগাযোগ</h3>
+            <p><i class="fas fa-phone"></i> হেল্পলাইন: 096XXXXXXXX</p>
+            <p><i class="fas fa-envelope"></i> ইমেইল: support@premiumshop.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> ঠিকানা: ১২৩/ক, বিজনেস স্ট্রিট, ঢাকা</p>
+            
+            <h3 style="margin-top: 20px;">পেমেন্ট মেথড</h3>
+            <div class="payment-methods">
+                <div class="payment-method-small">
+                    <img src="https://seeklogo.com/images/B/bkash-logo-8D709F83D4-seeklogo.com.png" alt="bKash">
+                </div>
+                <div class="payment-method-small">
+                    <img src="https://seeklogo.com/images/N/nagad-logo-8D9D0BCC71-seeklogo.com.png" alt="Nagad">
+                </div>
+                <div class="payment-method-small">
+                    <img src="https://cryptologos.cc/logos/bnb-bnb-logo.png" alt="Binance">
+                </div>
+                <div class="payment-method-small">
+                    <img src="https://cdn-icons-png.flaticon.com/512/179/179457.png" alt="Visa">
+                </div>
+                <div class="payment-method-small">
+                    <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" alt="Mastercard">
+                </div>
+                <div class="payment-method-small">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2331/2331966.png" alt="Cash on Delivery">
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 20px;">অ্যাপ ডাউনলোড করুন</h3>
+            <div style="display: flex; gap: 10px;">
+                <img src="https://via.placeholder.com/120x40?text=App+Store" alt="App Store" style="width: 100px; border-radius: 5px;">
+                <img src="https://via.placeholder.com/120x40?text=Google+Play" alt="Google Play" style="width: 100px; border-radius: 5px;">
+            </div>
+        </div>
+    </div>
+    
+    <div class="copyright">
+        <p>© 2023 প্রিমিয়াম শপ. সর্বস্বত্ব সংরক্ষিত। রেজিস্ট্রেশন নং: 304903094</p>
+        <p>Powered by Digital Bangladesh</p>
+    </div>
+</footer>
+
+<!-- Popup Modal -->
+<div class="popup-overlay" id="popupModal">
+    <div class="popup-content">
+        <div class="popup-header">
+            <h2 id="popupTitle">পপআপ শিরোনাম</h2>
+            <span class="close-popup">&times;</span>
+        </div>
+        <div class="popup-body" id="popupBody">
+            <!-- Content will be loaded here dynamically -->
+        </div>
+    </div>
+</div>
+
+    </footer>
+
+    <script>
+
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && cartModal.style.display === 'flex') {
+        cartModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+});
+
+
+
+
+
+
+    
+    // কার্ট ডাটা
+let cartData = [];
+
+// প্রোডাক্ট ডিসপ্লে ফাংশন
+function displayProducts() {
+    let html = '';
+    
+    products.forEach(product => {
+        html += `
+            <div class="product-card" data-category="${product.category}">
+                <img src="images/${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>${product.price.toLocaleString()} টাকা</p>
+                <button class="add-to-cart" data-id="${product.id}">
+                    <i class="fas fa-cart-plus"></i> কার্টে যোগ করুন
+                </button>
+            </div>
+        `;
+    });
+    
+    productContainer.innerHTML = html;
+    
+    // কার্ট বাটনে ইভেন্ট লিসেনার যোগ
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = parseInt(this.getAttribute('data-id'));
+            addToCart(productId);
+        });
+    });
+}
+
+// কার্টে প্রোডাক্ট যোগ ফাংশন
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    
+    if (product) {
+        const existingItem = cartData.find(item => item.id === productId);
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cartData.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: 1,
+                image: product.image
+            });
+        }
+        
+        renderCart();
+        
+        // নোটিফিকেশন শো করানো
+        showNotification(`${product.name} কার্টে যোগ করা হয়েছে!`);
+    }
+}
+
+// কার্ট রেন্ডার ফাংশন
+function renderCart() {
+    if (cartData.length === 0) {
+        orderList.innerHTML = `
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <p>আপনার কার্টে কোনো পণ্য নেই</p>
+            </div>
+        `;
+    } else {
+        let html = '';
+        let total = 0;
+        
+        cartData.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            html += `
+                <div class="order-item">
+                    <div class="item-image">
+                        <img src="images/${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="item-details">
+                        <h4>${item.name}</h4>
+                        <div class="item-controls">
+                            <button class="quantity-btn" data-id="${item.id}" data-action="decrease">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="quantity-btn" data-id="${item.id}" data-action="increase">+</button>
+                        </div>
+                        <p>${item.price.toLocaleString()} টাকা x ${item.quantity}</p>
+                    </div>
+                    <div class="item-price">
+                        <span>${itemTotal.toLocaleString()} টাকা</span>
+                        <button class="remove-item" data-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        
+        orderList.innerHTML = html;
+        document.getElementById('totalItems').textContent = `${cartData.length} টি`;
+        document.getElementById('grandTotal').textContent = `${(total + 100).toLocaleString()} টাকা`;
+        
+        // ইভেন্ট লিসেনার যোগ
+        document.querySelectorAll('.quantity-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productId = parseInt(this.getAttribute('data-id'));
+                const action = this.getAttribute('data-action');
+                updateQuantity(productId, action);
+            });
+        });
+        
+        document.querySelectorAll('.remove-item').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productId = parseInt(this.getAttribute('data-id'));
+                removeFromCart(productId);
+            });
+        });
+    }
+}
+
+// কোয়ান্টিটি আপডেট ফাংশন
+function updateQuantity(productId, action) {
+    const item = cartData.find(item => item.id === productId);
+    if (item) {
+        if (action === 'increase') {
+            item.quantity += 1;
+        } else if (action === 'decrease' && item.quantity > 1) {
+            item.quantity -= 1;
+        }
+        renderCart();
+    }
+}
+
+// কার্ট থেকে আইটেম রিমুভ ফাংশন
+function removeFromCart(productId) {
+    cartData = cartData.filter(item => item.id !== productId);
+    renderCart();
+    showNotification("পণ্য কার্ট থেকে সরানো হয়েছে!");
+}
+
+// নোটিফিকেশন শো ফাংশন
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.innerHTML = `
+        <p>${message}</p>
+    `;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+// ইনিশিয়াল লোড
+document.addEventListener('DOMContentLoaded', function() {
+    displayProducts();
+    renderCart();
+});
+
+
+
+
+          // Popup Content Data
+    const popupContents = {
+        'help-center': {
+            title: 'হেল্প সেন্টার',
+            content: `
+                <h3>সহায়তা প্রয়োজন?</h3>
+                <p>আমাদের হেল্পলাইন নম্বর: <strong>096XXXXXXXX</strong></p>
+                <p>ইমেইল: <strong>help@premiumshop.com</strong></p>
+                <p>সকাল ৯টা থেকে রাত ১০টা পর্যন্ত খোলা</p>
+                <h3>সচরাচর জিজ্ঞাসা</h3>
+                <ul>
+                    <li>অর্ডার কিভাবে ক্যান্সেল করবেন?</li>
+                    <li>পণ্য ডেলিভারি সময় কত?</li>
+                    <li>রিফান্ড পদ্ধতি কি?</li>
+                </ul>
+            `
+        },
+        'how-to-order': {
+            title: 'কিভাবে অর্ডার করবেন',
+            content: `
+                <h3>অর্ডার করার ধাপসমূহ</h3>
+                <ol>
+                    <li>প্রথমে আপনার পছন্দের পণ্য বাছাই করুন</li>
+                    <li>কার্টে যোগ করুন বাটনে ক্লিক করুন</li>
+                    <li>চেকআউট পেজে যান</li>
+                    <li>আপনার ঠিকানা এবং পেমেন্ট মেথড সিলেক্ট করুন</li>
+                    <li>অর্ডার কনফার্ম করুন</li>
+                </ol>
+                <p>ভিডিও টিউটোরিয়াল দেখতে <a href="#">এখানে ক্লিক করুন</a></p>
+            `
+        },
+        'return-refund': {
+            title: 'রিটার্ন ও রিফান্ড',
+            content: `
+                <h3>রিটার্ন পলিসি</h3>
+                <p>পণ্য পাওয়ার ৭ দিনের মধ্যে রিটার্ন করতে পারবেন</p>
+                <p>রিটার্নের জন্য শর্তাবলী:</p>
+                <ul>
+                    <li>পণ্য অবিকৃত অবস্থায় থাকতে হবে</li>
+                    <li>অরিজিনাল প্যাকেজিং থাকতে হবে</li>
+                    <li>বিল/রিসিট জমা দিতে হবে</li>
+                </ul>
+                <h3>রিফান্ড পদ্ধতি</h3>
+                <p>রিফান্ড একই পেমেন্ট মেথডে ৩-৫ কর্মদিবসের মধ্যে করা হবে</p>
+            `
+        },
+        'contact-us': {
+            title: 'যোগাযোগ করুন',
+            content: `
+                <h3>আমাদের সাথে যোগাযোগ</h3>
+                <p><strong>হেল্পলাইন:</strong> 096XXXXXXXX (সকাল ৯টা - রাত ১০টা)</p>
+                <p><strong>ইমেইল:</strong> support@premiumshop.com</p>
+                <p><strong>অফিস ঠিকানা:</strong> ১২৩/ক, বিজনেস স্ট্রিট, ঢাকা</p>
+                <p><strong>ফেসবুক পেজ:</strong> <a href="#">facebook.com/premiumshop</a></p>
+                <h3>অনলাইন সাপোর্ট</h3>
+                <p>লাইভ চ্যাটের জন্য আমাদের অ্যাপ ডাউনলোড করুন</p>
+            `
+        },
+        'terms': {
+            title: 'শর্তাবলী',
+            content: `
+                <h3>ব্যবহারের শর্তাবলী</h3>
+                <p>প্রিমিয়াম শপ এর ওয়েবসাইট এবং মোবাইল অ্যাপ্লিকেশন ব্যবহারের জন্য নিম্নলিখিত শর্তাবলী প্রযোজ্য:</p>
+                <ul>
+                    <li>অর্ডার ক্যান্সেলেশন পলিসি</li>
+                    <li>প্রাইভেসি পলিসি</li>
+                    <li>ডেলিভারি পলিসি</li>
+                    <li>রিটার্ন ও রিফান্ড পলিসি</li>
+                </ul>
+                <p>সম্পূর্ণ শর্তাবলী পড়তে <a href="#">এখানে ক্লিক করুন</a></p>
+            `
+        },
+        'about-company': {
+            title: 'কোম্পানি সম্পর্কে',
+            content: `
+                <h3>প্রিমিয়াম শপ সম্পর্কে</h3>
+                <p>প্রিমিয়াম শপ বাংলাদেশের শীর্ষস্থানীয় ই-কমার্স প্ল্যাটফর্ম। ২০২০ সাল থেকে আমরা বিশ্বস্ততার সাথে গ্রাহকদের সেবা প্রদান করে আসছি।</p>
+                <p><strong>আমাদের মিশন:</strong> সেরা পণ্য সেরা মূল্যে গ্রাহকের দোরগোড়ায় পৌঁছে দেওয়া</p>
+                <p><strong>আমাদের ভিশন:</strong> ডিজিটাল বাংলাদেশ গড়ার লক্ষ্যে কাজ করা</p>
+            `
+        },
+        'promotions': {
+            title: 'প্রচার ও অফার',
+            content: `
+                <h3>বর্তমান অফারসমূহ</h3>
+                <ul>
+                    <li>ফ্ল্যাশ সেল - ৭০% পর্যন্ত ছাড়</li>
+                    <li>নতুন গ্রাহকদের জন্য বিশেষ ডিসকাউন্ট</li>
+                    <li>ক্রেডিট কার্ডে ইএমআই সুবিধা</li>
+                </ul>
+                <h3>আসন্ন প্রচারণা</h3>
+                <p>ঈদ উৎসব উপলক্ষে বিশেষ ছাড়</p>
+                <p>বর্ষাবরণ সেল - আগামী সপ্তাহে</p>
+            `
+        },
+        'store-location': {
+            title: 'স্টোর লোকেশন',
+            content: `
+                <h3>আমাদের শোরুমের ঠিকানা</h3>
+                <p><strong>প্রধান শাখা:</strong> ১২৩/ক, বিজনেস স্ট্রিট, ঢাকা</p>
+                <p><strong>শাখা ২:</strong> এনায়েত বাজার, চট্টগ্রাম</p>
+                <p><strong>শাখা ৩:</strong> সদরঘাট, খুলনা</p>
+                <p><strong>খোলার সময়:</strong> সকাল ১০টা - রাত ৯টা (শুক্রবার বন্ধ)</p>
+                <h3>ম্যাপ</h3>
+                <p><a href="#">গুগল ম্যাপে দেখুন</a></p>
+            `
+        },
+        'blog': {
+            title: 'ব্লগ',
+            content: `
+                <h3>সাম্প্রতিক ব্লগ পোস্ট</h3>
+                <ul>
+                    <li><a href="#">ইলেকট্রনিক্স পণ্য কেনার সময় কি দেখবেন?</a></li>
+                    <li><a href="#">শীতকালীন ফ্যাশন ট্রেন্ডস ২০২৩</a></li>
+                    <li><a href="#">হোম ডেকোরেশন আইডিয়া</a></li>
+                </ul>
+                <p>আমাদের সম্পূর্ণ ব্লগ পড়তে <a href="#">এখানে ক্লিক করুন</a></p>
+            `
+        },
+        'career': {
+            title: 'ক্যারিয়ার',
+            content: `
+                <h3>চাকরির সুযোগ</h3>
+                <p>আমরা সব সময় মেধাবী এবং পরিশ্রমী মানুষ খুঁজছি। বর্তমান ভ্যাকেন্সি:</p>
+                <ul>
+                    <li>সেলস এক্সিকিউটিভ</li>
+                    <li>ডেলিভারি পার্টনার</li>
+                    <li>গ্রাফিক ডিজাইনার</li>
+                </ul>
+                <p>আবেদন করতে ইমেইল করুন: <strong>career@premiumshop.com</strong></p>
+            `
+        },
+        'sell-with-us': {
+            title: 'আমাদের সাথে বিক্রি করুন',
+            content: `
+                <h3>আপনার পণ্য আমাদের মার্কেটপ্লেসে বিক্রি করুন</h3>
+                <p>আমাদের সাথে যুক্ত হয়ে লক্ষাধিক গ্রাহকের কাছে আপনার পণ্য পৌঁছে দিন।</p>
+                <p><strong>যোগদানের প্রক্রিয়া:</strong></p>
+                <ol>
+                    <li>আমাদের ওয়েবসাইটে সেলার হিসাবে রেজিস্ট্রেশন করুন</li>
+                    <li>আপনার পণ্যের তথ্য আপলোড করুন</li>
+                    <li>আমাদের টিম থেকে অনুমোদন পেলে বিক্রি শুরু করুন</li>
+                </ol>
+                <p>বিস্তারিত জানতে কল করুন: 096XXXXXXXX</p>
+            `
+        },
+        'delivery-partner': {
+            title: 'ডেলিভারি পার্টনার',
+            content: `
+                <h3>ডেলিভারি পার্টনার হোন</h3>
+                <p>আপনি যদি একটি ডেলিভারি সার্ভিস চালান, আমাদের সাথে যুক্ত হয়ে আরও বেশি অর্ডার পান।</p>
+                <p><strong>যোগদানের শর্তাবলী:</strong></p>
+                <ul>
+                    <li>বাইক এবং স্মার্টফোন থাকতে হবে</li>
+                    <li>ভালো জায়গা চেনা জানা থাকতে হবে</li>
+                    <li>নিরাপদ ডেলিভারি নিশ্চিত করতে হবে</li>
+                </ul>
+                <p>আবেদন করতে: <a href="#">এখানে ক্লিক করুন</a></p>
+            `
+        },
+        'advertise': {
+            title: 'বিজ্ঞাপন দিন',
+            content: `
+                <h3>আমাদের প্ল্যাটফর্মে বিজ্ঞাপন দিন</h3>
+                <p>আমাদের ১০ লক্ষ+ ব্যবহারকারীর কাছে আপনার ব্র্যান্ডের প্রচার করুন।</p>
+                <p><strong>বিজ্ঞাপনের ধরণ:</strong></p>
+                <ul>
+                    <li>হোমপেজ ব্যানার</li>
+                    <li>প্রোডাক্ট পেজ বিজ্ঞাপন</li>
+                    <li>ইমেইল মার্কেটিং</li>
+                    <li>সোশ্যাল মিডিয়া প্রমোশন</li>
+                </ul>
+                <p>দরদাম জানতে ইমেইল করুন: <strong>ads@premiumshop.com</strong></p>
+            `
+        },
+        'gift-card': {
+            title: 'গিফট কার্ড',
+            content: `
+                <h3>প্রিমিয়াম শপ গিফট কার্ড</h3>
+                <p>আপনার প্রিয়জনকে গিফট কার্ড উপহার দিন। তারা যেকোনো পণ্য কিনতে এটি ব্যবহার করতে পারবে।</p>
+                <p><strong>গিফট কার্ডের ধরণ:</strong></p>
+                <ul>
+                    <li>৫০০ টাকা</li>
+                    <li>১০০০ টাকা</li>
+                    <li>৫০০০ টাকা</li>
+                    <li>কাস্টম অ্যামাউন্ট</li>
+                </ul>
+                <p>গিফট কার্ড কিনতে <a href="#">এখানে ক্লিক করুন</a></p>
+            `
+        },
+        'affiliate': {
+            title: 'অ্যাফিলিয়েট প্রোগ্রাম',
+            content: `
+                <h3>অ্যাফিলিয়েট হয়ে আয় করুন</h3>
+                <p>আমাদের প্রোডাক্ট লিঙ্ক শেয়ার করে প্রতি বিক্রয়ে কমিশন পান।</p>
+                <p><strong>কিভাবে কাজ করে:</strong></p>
+                <ol>
+                    <li>আমাদের অ্যাফিলিয়েট প্রোগ্রামে যোগ দিন</li>
+                    <li>আপনার ইউনিক লিঙ্ক পাবেন</li>
+                    <li>এই লিঙ্ক শেয়ার করুন</li>
+                    <li>প্রতি বিক্রয়ে ১০% কমিশন পান</li>
+                </ol>
+                <p>রেজিস্ট্রেশন করতে: <a href="#">এখানে ক্লিক করুন</a></p>
+            `
+        }
+    };
+
+    // Footer Link Click Handler
+    document.querySelectorAll('.footer-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const popupId = this.getAttribute('data-popup');
+            showPopup(popupId);
+        });
+    });
+
+    // Show Popup Function
+    function showPopup(popupId) {
+        const popupData = popupContents[popupId];
+        if (popupData) {
+            document.getElementById('popupTitle').textContent = popupData.title;
+            document.getElementById('popupBody').innerHTML = popupData.content;
+            document.getElementById('popupModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    // Close Popup
+    document.querySelector('.close-popup').addEventListener('click', function() {
+        document.getElementById('popupModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    // Close when clicking outside
+    document.getElementById('popupModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            document.getElementById('popupModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+
+
+
+
+         
+        // প্রোডাক্ট ডাটা (১০০+ পণ্য)
+        const products = [
+            // ইলেকট্রনিক্স পণ্য (30টি)
+            {
+                id: 1,
+                title: "স্যামসাং গ্যালাক্সি S23 আল্ট্রা",
+                category: "electronics",
+                price: 124999,
+                originalPrice: 139999,
+                discount: 11,
+                image: "https://images.tv9bangla.com/wp-content/uploads/2023/03/ultra.jpg"
+            },
+            {
+                id: 2,
+                title: "আইফোন 14 প্রো ম্যাক্স",
+                category: "electronics",
+                price: 149999,
+                originalPrice: 159999,
+                discount: 6,
+                image: "https://images.unsplash.com/photo-1664478546384-d57ffe74a78c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aXBob25lJTIwMTR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 3,
+                title: "ওয়ানপ্লাস 11 প্রো 5G",
+                category: "electronics",
+                price: 89999,
+                originalPrice: 99999,
+                discount: 10,
+                image: "https://www.dhonno.com/public/uploads/all/r1gcCm9jsPnM85tpqfBRcL2HAtfCSDccR622W0FN.jpg"
+            },
+            {
+                id: 4,
+                title: "সোনি প্লেস্টেশন 5 ডিজিটাল",
+                category: "electronics",
+                price: 54999,
+                originalPrice: 59999,
+                discount: 8,
+                image: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHM1fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 5,
+                title: "এয়ারপডস প্রো 2য় জেনারেশন",
+                category: "electronics",
+                price: 24999,
+                originalPrice: 29999,
+                discount: 17,
+                image: "https://img.drz.lazcdn.com/static/bd/p/df30d65a585267517be8967b41778a98.jpg_2200x2200q80.jpg_.webp"
+            },
+            {
+                id: 6,
+                title: "ম্যাকবুক প্রো M2 13-ইঞ্চি",
+                category: "electronics",
+                price: 149999,
+                originalPrice: 169999,
+                discount: 12,
+                image: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFjYm9vayUyMHBybyUyMG0yfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 7,
+                title: "ডেল এক্সপিএস 15 ল্যাপটপ",
+                category: "electronics",
+                price: 119999,
+                originalPrice: 129999,
+                discount: 8,
+                image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGxhcHRvcHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 8,
+                title: "গুগল পিক্সেল 7 প্রো",
+                category: "electronics",
+                price: 79999,
+                originalPrice: 89999,
+                discount: 11,
+                image: "https://ddfndelma2gpn.cloudfront.net/color/2134/pixel_7_pro_Obsidian.webp"
+            },
+            {
+                id: 22,
+                title: "স্মার্ট টিভি 55 ইঞ্চি",
+                category: "electronics",
+                price: 54999,
+                originalPrice: 69999,
+                discount: 21,
+                image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHZ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 23,
+                title: "সাউন্ডবার",
+                category: "electronics",
+                price: 12999,
+                originalPrice: 17999,
+                discount: 28,
+                image: "https://images.unsplash.com/photo-1545454675-3531b543be5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c291bmRiYXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 24,
+                title: "গেমিং কনসোল",
+                category: "electronics",
+                price: 39999,
+                originalPrice: 49999,
+                discount: 20,
+                image: "https://images.unsplash.com/photo-1607853202273-797f1c22a38e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FtaW5nJTIwY29uc29sZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 25,
+                title: "ফিটনেস ব্যান্ড",
+                category: "electronics",
+                price: 2999,
+                originalPrice: 4999,
+                discount: 40,
+                image: "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Zml0bmVzcyUyMGJhbmR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 26,
+                title: "স্মার্ট ওয়াচ",
+                category: "electronics",
+                price: 8999,
+                originalPrice: 12999,
+                discount: 31,
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c21hcnQlMjB3YXRjaHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 27,
+                title: "ড্রোন ক্যামেরা",
+                category: "electronics",
+                price: 29999,
+                originalPrice: 39999,
+                discount: 25,
+                image: "https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZHJvbmV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 28,
+                title: "ডিজিটাল ক্যামেরা",
+                category: "electronics",
+                price: 49999,
+                originalPrice: 59999,
+                discount: 17,
+                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FtZXJhfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 29,
+                title: "প্রিন্টার",
+                category: "electronics",
+                price: 12999,
+                originalPrice: 17999,
+                discount: 28,
+                image: "https://images.unsplash.com/photo-1587840171670-8b850147754e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJpbnRlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 30,
+                title: "স্ক্যানার",
+                category: "electronics",
+                price: 8999,
+                originalPrice: 12999,
+                discount: 31,
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQvBx5NaMyG77NIer1L4PZQpDRjLOD7Ms-IA&s"
+            },
+            {
+                id: 31,
+                title: "হেডফোন",
+                category: "electronics",
+                price: 2999,
+                originalPrice: 4999,
+                discount: 40,
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGVhZHBob25lfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 32,
+                title: "স্পিকার",
+                category: "electronics",
+                price: 4999,
+                originalPrice: 7999,
+                discount: 38,
+                image: "https://rks.com.bd/frd-data/img/product/2023/03/_181_frd_1680131417.jpg"
+            },
+            {
+                id: 33,
+                title: "কীবোর্ড",
+                category: "electronics",
+                price: 1999,
+                originalPrice: 2999,
+                discount: 33,
+                image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a2V5Ym9hcmR8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 34,
+                title: "মাউস",
+                category: "electronics",
+                price: 999,
+                originalPrice: 1499,
+                discount: 33,
+                image: "https://images.unsplash.com/photo-1527814050087-3793815479db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW91c2V8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 35,
+                title: "মডেম",
+                category: "electronics",
+                price: 2999,
+                originalPrice: 3999,
+                discount: 25,
+                image: "https://www.teachers.gov.bd/shared/content_image/2024/February/26/170894733165dc7783ef713.webp"
+            },
+            {
+                id: 36,
+                title: "রাউটার",
+                category: "electronics",
+                price: 2499,
+                originalPrice: 3499,
+                discount: 29,
+                image: "https://egonlineshopbd.com/wp-content/uploads/2021/08/TP-Link-WR845N-300Mbps-Wireless-N-Router.jpg"
+            },
+            {
+                id: 37,
+                title: "পাওয়ার ব্যাংক",
+                category: "electronics",
+                price: 1999,
+                originalPrice: 2999,
+                discount: 33,
+                image: "https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG93ZXIlMjBiYW5rfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 38,
+                title: "ইউপিএস",
+                category: "electronics",
+                price: 5999,
+                originalPrice: 7999,
+                discount: 25,
+                image: "https://ph-test-11.slatic.net/p/4d909d32ad94556030f5878ebffb2fe8.png"
+            },
+            {
+                id: 39,
+                title: "এয়ার কন্ডিশনার",
+                category: "electronics",
+                price: 49999,
+                originalPrice: 59999,
+                discount: 17,
+                image: "https://images.unsplash.com/photo-1558002038-1055907df827?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWlyJTIwY29uZGl0aW9uZXJ8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 40,
+                title: "ফ্যান",
+                category: "electronics",
+                price: 2999,
+                originalPrice: 3999,
+                discount: 25,
+                image: "https://images.unsplash.com/photo-1560493676-04071c5f467b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmFufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            // ফ্যাশন পণ্য (20টি)
+            {
+                id: 41,
+                title: "মুশফিকুর রহিম জার্সি",
+                category: "clothing",
+                price: 1299,
+                originalPrice: 1999,
+                discount: 35,
+                image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJkJTIwY3JpY2tldCUyMGplcnNleXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 42,
+                title: "শাকিব আল হাসান জার্সি",
+                category: "clothing",
+                price: 1199,
+                originalPrice: 1799,
+                discount: 33,
+                image: "https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGJkJTIwY3JpY2tldCUyMGplcnNleXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 43,
+                title: "মেয়েদের সালোয়ার কামিজ",
+                category: "clothing",
+                price: 1499,
+                originalPrice: 2499,
+                discount: 40,
+                image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2Fsd2FyJTIwa2FtZWV6fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 44,
+                title: "পুরুষদের ফরমাল শার্ট",
+                category: "clothing",
+                price: 999,
+                originalPrice: 1799,
+                discount: 44,
+                image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9ybWFsJTIwc2hpcnR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 45,
+                title: "শিশুদের টি-শার্ট",
+                category: "clothing",
+                price: 399,
+                originalPrice: 699,
+                discount: 43,
+                image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a2lkcyUyMHRzaGlydHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 46,
+                title: "মেয়েদের হিজাব",
+                category: "clothing",
+                price: 499,
+                originalPrice: 899,
+                discount: 44,
+                image: "https://i.pinimg.com/736x/47/aa/03/47aa036042cfd1e733eaf319cb448480.jpg"
+            },
+            {
+                id: 47,
+                title: "জিন্স প্যান্ট",
+                category: "clothing",
+                price: 1299,
+                originalPrice: 1999,
+                discount: 35,
+                image: "https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8amVhbnN8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 48,
+                title: "শীতকালীন জ্যাকেট",
+                category: "clothing",
+                price: 1799,
+                originalPrice: 2999,
+                discount: 40,
+                image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8amFja2V0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 49,
+                title: "শাড়ি (সিল্ক)",
+                category: "clothing",
+                price: 3499,
+                originalPrice: 4999,
+                discount: 30,
+                image: "https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FyZWV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 50,
+                title: "পাঞ্জাবি (পুরুষ)",
+                category: "clothing",
+                price: 1999,
+                originalPrice: 2499,
+                discount: 33,
+                image: "https://podmamart.com/wp-content/uploads/2024/03/em.jpg"
+            },
+            {
+                id: 51,
+                title: "ফতুয়া (পুরুষ)",
+                category: "clothing",
+                price: 599,
+                originalPrice: 999,
+                discount: 40,
+                image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dCUyMHNoaXJ0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 52,
+                title: "স্যান্ডেল (পুরুষ)",
+                category: "clothing",
+                price: 799,
+                originalPrice: 1299,
+                discount: 38,
+                image: "https://bn.smartdeal.com.bd/public/uploads/all/SL3lUlxQEQG8AfyZaWHHAyAsNhrVRLCtgj73tPYl.jpg"
+            },
+            {
+                id: 53,
+                title: "জুতা (পুরুষ)",
+                category: "clothing",
+                price: 1499,
+                originalPrice: 2299,
+                discount: 35,
+                image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c25lYWtlcnN8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 54,
+                title: "হ্যান্ডব্যাগ (মহিলা)",
+                category: "clothing",
+                price: 999,
+                originalPrice: 1699,
+                discount: 41,
+                image: "https://images.unsplash.com/photo-1591348122449-02525d70379b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZGJhZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 55,
+                title: "ওয়ালেট (পুরুষ)",
+                category: "clothing",
+                price: 499,
+                originalPrice: 899,
+                discount: 44,
+                image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbGV0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 56,
+                title: "সানগ্লাস",
+                category: "clothing",
+                price: 599,
+                originalPrice: 999,
+                discount: 40,
+                image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3VuZ2xhc3Nlc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 57,
+                title: "ঘড়ি (পুরুষ)",
+                category: "clothing",
+                price: 1299,
+                originalPrice: 1999,
+                discount: 35,
+                image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0Y2h8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 58,
+                title: "ঘড়ি (মহিলা)",
+                category: "clothing",
+                price: 999,
+                originalPrice: 1599,
+                discount: 38,
+                image: "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d29tZW4lMjB3YXRjaHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 59,
+                title: "স্কার্ফ",
+                category: "clothing",
+                price: 399,
+                originalPrice: 699,
+                discount: 43,
+                image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2NhcmZ8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 60,
+                title: "মাফলার",
+                category: "clothing",
+                price: 499,
+                originalPrice: 899,
+                discount: 44,
+                image: "https://images.unsplash.com/photo-1596727147705-61a532a659bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bXVmZmxlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            // ঘরোয়া পণ্য (20টি)
+            {
+                id: 61,
+                title: "নন-স্টিক কুকিং প্যান",
+                category: "home",
+                price: 1499,
+                originalPrice: 2499,
+                discount: 40,
+                image: "https://images.unsplash.com/photo-1582515073490-39981397c445?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bm9uJTIwc3RpY2slMjBwYW58ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 62,
+                title: "ব্লেন্ডার মেশিন",
+                category: "home",
+                price: 2499,
+                originalPrice: 3999,
+                discount: 38,
+                image: "https://images.unsplash.com/photo-1560343090-f0409e92791a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmxlbmRlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 63,
+                title: "মাইক্রোওয়েভ ওভেন",
+                category: "home",
+                price: 8999,
+                originalPrice: 12999,
+                discount: 31,
+                image: "https://static.digit.in/default/bc16af6e4b5d4c5d62297e1b38a496e7b09c80fd.jpeg"
+            },
+            {
+                id: 64,
+                title: "এয়ার ফ্রায়ার",
+                category: "home",
+                price: 5999,
+                originalPrice: 7999,
+                discount: 25,
+                image: "https://cdn.accentuate.io/605666443568/-1695035269432/3-v1695036808948.png?800x800"
+            },
+            {
+                id: 65,
+                title: "ভ্যাকুয়াম ক্লিনার",
+                category: "home",
+                price: 4999,
+                originalPrice: 6999,
+                discount: 29,
+                image: "https://images.unsplash.com/photo-1598295893369-1918ffaf89a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dmFjdXVtJTIwY2xlYW5lcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 66,
+                title: "ইলেকট্রিক কেটলি",
+                category: "home",
+                price: 1299,
+                originalPrice: 1999,
+                discount: 35,
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtJ2LgjgQD_kOlhtrpA29V2QXUxqP0DYuyyg&s"
+            },
+            {
+                id: 67,
+                title: "টোস্টার",
+                category: "home",
+                price: 1499,
+                originalPrice: 2299,
+                discount: 35,
+                image: "https://images.unsplash.com/photo-1588449668365-d15e397f6787?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dG9hc3RlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 68,
+                title: "রাইস কুকার",
+                category: "home",
+                price: 2999,
+                originalPrice: 3999,
+                discount: 25,
+                image: "https://bestsellbd.com/public/uploads/all/mociEnfrNqaDQdgyK19h0PoUgThOYlG0FNutbG2q.png"
+            },
+            {
+                id: 69,
+                title: "প্রেসার কুকার",
+                category: "home",
+                price: 2499,
+                originalPrice: 3499,
+                discount: 29,
+                image: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJlc3N1cmUlMjBjb29rZXJ8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 70,
+                title: "ফুড প্রসেসর",
+                category: "home",
+                price: 3499,
+                originalPrice: 4999,
+                discount: 30,
+                image: "https://img.drz.lazcdn.com/static/bd/p/60bfa7daeaedee092a63acaf9f0ee949.jpg_960x960q80.jpg_.webp"
+            },
+            {
+                id: 71,
+                title: "জুসার",
+                category: "home",
+                price: 1999,
+                originalPrice: 2999,
+                discount: 33,
+                image: "https://ofuronto.com/wp-content/uploads/2022/11/292508-1-1-1.jpg"
+            },
+            {
+                id: 72,
+                title: "হ্যান্ড মিক্সার",
+                category: "home",
+                price: 1299,
+                originalPrice: 1999,
+                discount: 35,
+                image: "https://images.unsplash.com/photo-1591798454113-023d7379221f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZCUyMG1peGVyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 73,
+                title: "ডাইনিং সেট (৬ পিস)",
+                category: "home",
+                price: 3499,
+                originalPrice: 4999,
+                discount: 30,
+                image: "https://i5.walmartimages.com/seo/Churanty-Classic-6-Pieces-Dining-Set-Wooden-Rectangle-Table-and-4-Chairs-with-Bench-for-Kitchen-Dining-Room-Brown-Cottage-White_9c76cd93-b3d1-4633-93ed-f8cdb2ccbe08.c017b2a08c473b217a255cd74b9bf428.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF"
+            },
+            {
+                id: 74,
+                title: "গ্লাস সেট (৬ পিস)",
+                category: "home",
+                price: 799,
+                originalPrice: 1299,
+                discount: 38,
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS665M-6yynFBuXJRYRE7jqlI2Xc74EB2_0w&s"
+            },
+            {
+                id: 75,
+                title: "টিফিন বক্স সেট",
+                category: "home",
+                price: 999,
+                originalPrice: 1599,
+                discount: 38,
+                image: "https://images-cdn.ubuy.co.in/648d010016b800454a5a3c18-milton-tasty-lunch-combo-box-set-soft.jpg"
+            },
+            {
+                id: 76,
+                title: "ওয়াটার বোতল",
+                category: "home",
+                price: 499,
+                originalPrice: 799,
+                discount: 38,
+                image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0ZXIlMjBib3R0bGV8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 77,
+                title: "ফ্লোর ম্যাট",
+                category: "home",
+                price: 699,
+                originalPrice: 1199,
+                discount: 42,
+                image: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWF0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 78,
+                title: "কার্পেট (৫x৭ ফুট)",
+                category: "home",
+                price: 2499,
+                originalPrice: 3999,
+                discount: 38,
+                image: "https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FycGV0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 79,
+                title: "কুশন কভার সেট",
+                category: "home",
+                price: 899,
+                originalPrice: 1499,
+                discount: 40,
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRscWyg-C_5DH0tnfATkBt81eZkt6l2Efv7Xw&s"
+            },
+            {
+                id: 80,
+                title: "বেড শীট সেট",
+                category: "home",
+                price: 1299,
+                originalPrice: 1999,
+                discount: 35,
+                image: "https://www.smarteshopbd.com/wp-content/uploads/2023/12/BS-448.webp"
+            },
+            // ব্র্যান্ড পণ্য (15টি)
+            {
+                id: 81,
+                title: "নাইকি এয়ার জর্ডান",
+                category: "brand",
+                price: 12999,
+                originalPrice: 15999,
+                discount: 19,
+                image: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmlrZSUyMHNob2VzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 82,
+                title: "অ্যাডিডাস স্ট্যান স্মিথ",
+                category: "brand",
+                price: 8999,
+                originalPrice: 11999,
+                discount: 25,
+                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c25lYWtlcnN8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 83,
+                title: "গুচি হ্যান্ডব্যাগ",
+                category: "brand",
+                price: 24999,
+                originalPrice: 34999,
+                discount: 29,
+                image: "https://images.unsplash.com/photo-1591348122449-02525d70379b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VjY2klMjBiYWd8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 84,
+                title: "লুই ভিটন ওয়ালেট",
+                category: "brand",
+                price: 14999,
+                originalPrice: 19999,
+                discount: 25,
+                image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbGV0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 85,
+                title: "রেইব্যান সানগ্লাস",
+                category: "brand",
+                price: 7999,
+                originalPrice: 11999,
+                discount: 33,
+                image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3VuZ2xhc3Nlc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 86,
+                title: "রোলেক্স ঘড়ি",
+                category: "brand",
+                price: 499999,
+                originalPrice: 599999,
+                discount: 17,
+                image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cm9sZXh8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 87,
+                title: "ক্যালভিন ক্লেইন পারফিউম",
+                category: "brand",
+                price: 5999,
+                originalPrice: 7999,
+                discount: 25,
+                image: "https://static.sweetcare.com/img/prd/488/v-638581039097692670/calvin-klein-021349ck-1.webp"
+            },
+            {
+                id: 88,
+                title: "ডিজেল জিন্স",
+                category: "brand",
+                price: 7999,
+                originalPrice: 9999,
+                discount: 20,
+                image: "https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8amVhbnN8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 89,
+                title: "টমি হিলফিগার টি-শার্ট",
+                category: "brand",
+                price: 2999,
+                originalPrice: 4999,
+                discount: 40,
+                image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dCUyMHNoaXJ0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 90,
+                title: "জারা কোট",
+                category: "brand",
+                price: 8999,
+                originalPrice: 12999,
+                discount: 31,
+                image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y29hdHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 91,
+                title: "এইচএন্ডএম ড্রেস",
+                category: "brand",
+                price: 3999,
+                originalPrice: 5999,
+                discount: 33,
+                image: "https://img.baba-blog.com/2025/01/Stylish-outfit-with-beautiful-dress-on-white-background.jpg?x-oss-process=style%2Flarge"
+            },
+            {
+                id: 92,
+                title: "প্রাডা ব্যাগ",
+                category: "brand",
+                price: 34999,
+                originalPrice: 49999,
+                discount: 30,
+                image: "https://images.unsplash.com/photo-1591348122449-02525d70379b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZGJhZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 93,
+                title: "বারবেরি স্কার্ফ",
+                category: "brand",
+                price: 12999,
+                originalPrice: 17999,
+                discount: 28,
+                image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2NhcmZ8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 94,
+                title: "আর্মানি স্যুট",
+                category: "brand",
+                price: 24999,
+                originalPrice: 34999,
+                discount: 29,
+                image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3VpdHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 95,
+                title: "ভার্সেস ব্রেসলেট",
+                category: "brand",
+                price: 9999,
+                originalPrice: 14999,
+                discount: 33,
+                image: "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnJhY2VsZXR8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            // অফার পণ্য (10টি)
+            {
+                id: 96,
+                title: "স্পেশাল অফার - স্যামসাং গ্যালাক্সি S22",
+                category: "offer",
+                price: 89999,
+                originalPrice: 119999,
+                discount: 25,
+                image: "https://images.unsplash.com/photo-1664478546384-d57ffe74a78c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2Ftc3VuZyUyMHMyMnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 97,
+                title: "ফ্ল্যাশ সেল - নন-স্টিক প্যান সেট",
+                category: "offer",
+                price: 2999,
+                originalPrice: 4999,
+                discount: 40,
+                image: "https://images.unsplash.com/photo-1582515073490-39981397c445?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFuJTIwc2V0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 98,
+                title: "ডিসকাউন্ট অফার - শীতকালীন জ্যাকেট",
+                category: "offer",
+                price: 1299,
+                originalPrice: 2999,
+                discount: 57,
+                image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8amFja2V0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 99,
+                title: "বিগ সেল - স্মার্ট ওয়াচ",
+                category: "offer",
+                price: 5999,
+                originalPrice: 9999,
+                discount: 40,
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c21hcnQlMjB3YXRjaHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 100,
+                title: "স্পেশাল ডিল - বেড শীট সেট",
+                category: "offer",
+                price: 999,
+                originalPrice: 1999,
+                discount: 50,
+                image: "https://www.smarteshopbd.com/wp-content/uploads/2022/08/BS-407.jpg"
+            },
+            {
+                id: 101,
+                title: "লিমিটেড অফার - ফিটনেস ব্যান্ড",
+                category: "offer",
+                price: 1999,
+                originalPrice: 3999,
+                discount: 50,
+                image: "https://images.unsplash.com/photo-1576243345690-4e4b79b63288?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Zml0bmVzcyUyMGJhbmR8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 102,
+                title: "হট ডিল - ব্লেন্ডার মেশিন",
+                category: "offer",
+                price: 1999,
+                originalPrice: 3499,
+                discount: 43,
+                image: "https://images.unsplash.com/photo-1560343090-f0409e92791a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmxlbmRlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 103,
+                title: "মেগা অফার - কার্পেট",
+                category: "offer",
+                price: 1999,
+                originalPrice: 3999,
+                discount: 50,
+                image: "https://images.unsplash.com/photo-1556911220-bff31c812dba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FycGV0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 104,
+                title: "এক্সক্লুসিভ অফার - গুচি ব্যাগ",
+                category: "offer",
+                price: 19999,
+                originalPrice: 34999,
+                discount: 43,
+                image: "https://images.unsplash.com/photo-1591348122449-02525d70379b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3VjY2klMjBiYWd8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 105,
+                title: "স্পেশাল প্রাইস - নাইকি জুতা",
+                category: "offer",
+                price: 5999,
+                originalPrice: 9999,
+                discount: 40,
+                image: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmlrZSUyMHNob2VzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            },
+            // নতুন পণ্য (10টি)
+            {
+                id: 106,
+                title: "নতুন - স্যামসাং গ্যালাক্সি Z ফ্লিপ 5",
+                category: "new",
+                price: 149999,
+                originalPrice: 159999,
+                discount: 6,
+                image: "https://www.mobiledokan.co/wp-content/uploads/2022/08/Samsung-Galaxy-Z-Flip5.jpg"
+            },
+            {
+                id: 107,
+                title: "নতুন মডেল - আইফোন 15 প্রো",
+                category: "new",
+                price: 169999,
+                originalPrice: 179999,
+                discount: 6,
+                image: "https://cdn.kalvo.com/uploads/img/gallery/55251-apple-iphone-15-pro-max-2.jpg"
+            },
+            {
+                id: 108,
+                title: "নতুন আসছে - সনি WH-1000XM5 হেডফোন",
+                category: "new",
+                price: 34999,
+                originalPrice: 39999,
+                discount: 13,
+                image: "https://i0.wp.com/inews.zoombangla.com/wp-content/uploads/2025/07/Sony-WH-1000XM5-Wireless-Headphones-%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE%E0%A6%A6%E0%A7%87%E0%A6%B6%E0%A7%87-%E0%A6%93-%E0%A6%AD%E0%A6%BE%E0%A6%B0%E0%A6%A4%E0%A7%87-%E0%A6%A6%E0%A6%BE%E0%A6%AE-%E0%A6%AC%E0%A6%BF%E0%A6%B8%E0%A7%8D%E0%A6%A4%E0%A6%BE%E0%A6%B0%E0%A6%BF%E0%A6%A4-%E0%A6%B8%E0%A7%8D%E0%A6%AA%E0%A7%87%E0%A6%B8%E0%A6%BF%E0%A6%AB%E0%A6%BF%E0%A6%95%E0%A7%87%E0%A6%B6%E0%A6%A8%E0%A6%B8%E0%A6%B9.webp?fit=960%2C640&ssl=1"
+            },
+            {
+                id: 109,
+                title: "নতুন ভার্সন - ম্যাকবুক এয়ার M2",
+                category: "new",
+                price: 129999,
+                originalPrice: 139999,
+                discount: 7,
+                image: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFjYm9vayUyMGFpcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 110,
+                title: "নতুন লঞ্চ - গুগল পিক্সেল 8 প্রো",
+                category: "new",
+                price: 89999,
+                originalPrice: 99999,
+                discount: 10,
+                image: "https://static.hub.91mobiles.com/multisite/wp-content/uploads/sites/4/2024/05/Google-Pixel-8a-1.png?tr=q-70"
+            },
+            {
+                id: 111,
+                title: "নতুন সিরিজ - স্যামসাং QLED 8K TV",
+                category: "new",
+                price: 249999,
+                originalPrice: 299999,
+                discount: 17,
+                image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHZ8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 112,
+                title: "নতুন ডিজাইন - ড্রোন প্রো 4",
+                category: "new",
+                price: 49999,
+                originalPrice: 59999,
+                discount: 17,
+                image: "https://images.unsplash.com/photo-1507582020474-9a35b7d455d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZHJvbmV8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 113,
+                title: "নতুন কালেকশন - লুই ভিটন ব্যাগ",
+                category: "new",
+                price: 59999,
+                originalPrice: 69999,
+                discount: 14,
+                image: "https://images.unsplash.com/photo-1591348122449-02525d70379b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bHZ8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 114,
+                title: "নতুন স্টাইল - রোলেক্স ডেটজাস্ট",
+                category: "new",
+                price: 599999,
+                originalPrice: 699999,
+                discount: 14,
+                image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cm9sZXh8ZW58MHx8MHx8fDA%3D%3D&auto=format&fit=crop&w=500&q=60"
+            },
+            {
+                id: 115,
+                title: "নতুন কালার - নাইকি এয়ার ফোর্স 1",
+                category: "new",
+                price: 12999,
+                originalPrice: 14999,
+                discount: 13,
+                image: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmlrZSUyMHNob2VzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+            }
+        ];
+
+        // DOM এলিমেন্ট
+        const productsContainer = document.getElementById('products-container');
+        const paymentModal = document.getElementById('paymentModal');
+        const closeModal = document.getElementById('closeModal');
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const paymentDetails = document.getElementById('paymentDetails');
+        const submitPayment = document.getElementById('submitPayment');
+        const navItems = document.querySelectorAll('.nav-item');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const categoryTitle = document.getElementById('categoryTitle');
+        const footerLinks = document.querySelectorAll('.footer-link');
+        // DOM এলিমেন্ট সিলেক্ট করা
+        const cartBtn = document.getElementById('cartBtn');
+        const cartModal = document.getElementById('cartModal');
+        const closeCartModal = document.getElementById('closeCartModal');
+        const orderList = document.getElementById('orderList');
+        const productContainer = document.getElementById('productContainer');
+
+        
+
+        // কারেন্ট সিলেক্টেড প্রোডাক্ট এবং পেমেন্ট মেথড
+        let selectedProduct = null;
+        let selectedPaymentMethod = null;
+        let currentCategory = 'all';
+
+        // প্রোডাক্ট ডিসপ্লে ফাংশন
+        function displayProducts(category = 'all', searchTerm = '') {
+            productsContainer.innerHTML = '';
+            
+            let filteredProducts = products;
+            
+            // ক্যাটাগরি অনুযায়ী ফিল্টার
+            if (category !== 'all') {
+                filteredProducts = filteredProducts.filter(product => product.category === category);
+            }
+            
+            // সার্চ টার্ম অনুযায়ী ফিল্টার
+            if (searchTerm) {
+                const term = searchTerm.toLowerCase();
+                filteredProducts = filteredProducts.filter(product => 
+                    product.title.toLowerCase().includes(term)
+                );
+            }
+            
+            // ক্যাটাগরি টাইটেল আপডেট
+            updateCategoryTitle(category, searchTerm);
+            
+            // প্রোডাক্ট কার্ড তৈরি
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-badge">${product.discount}% ছাড়</div>
+                    <div class="product-img-container">
+                        <img src="${product.image}" alt="${product.title}" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.title}</h3>
+                        <div class="price-container">
+                            <span class="current-price">৳${product.price.toLocaleString('bn-BD')}</span>
+                            <span class="original-price">৳${product.originalPrice.toLocaleString('bn-BD')}</span>
+                        </div>
+                        <button class="order-btn" data-id="${product.id}">
+                            <i class="fas fa-shopping-cart"></i> অর্ডার করুন
+                        </button>
+                    </div>
+                `;
+                
+                productsContainer.appendChild(productCard);
+            });
+            
+            // অর্ডার বাটনে ইভেন্ট লিসেনার যোগ করা
+            document.querySelectorAll('.order-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    selectedProduct = products.find(p => p.id === productId);
+                    openPaymentModal();
+                });
+            });
+        }
+
+        // ক্যাটাগরি টাইটেল আপডেট ফাংশন
+        function updateCategoryTitle(category, searchTerm = '') {
+            if (searchTerm) {
+                categoryTitle.textContent = `"${searchTerm}" এর জন্য সার্চ ফলাফল`;
+                return;
+            }
+            
+            const titles = {
+                'all': 'আমাদের সেরা পণ্য',
+                'electronics': 'ইলেকট্রনিক্স পণ্য',
+                'clothing': 'ফ্যাশন পণ্য',
+                'home': 'ঘরোয়া পণ্য',
+                'brand': 'ব্র্যান্ডেড পণ্য',
+                'offer': 'বিশেষ অফার',
+                'new': 'নতুন আগত পণ্য'
+            };
+            
+            categoryTitle.textContent = titles[category] || 'আমাদের পণ্য';
+        }
+
+        // পেমেন্ট মোডাল ওপেন ফাংশন
+        function openPaymentModal() {
+            paymentModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            paymentDetails.style.display = 'none';
+            selectedPaymentMethod = null;
+            
+            // রিসেট পেমেন্ট মেথড সিলেকশন
+            paymentMethods.forEach(method => {
+                method.classList.remove('selected');
+            });
+            
+            // প্রোডাক্ট প্রাইস সেট করা
+            if (selectedProduct) {
+                document.getElementById('amount').value = selectedProduct.price;
+            }
+        }
+
+        // পেমেন্ট মোডাল ক্লোজ ফাংশন
+        function closePaymentModal() {
+            paymentModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // পেমেন্ট মেথড সিলেক্ট করা
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', function() {
+                paymentMethods.forEach(m => m.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedPaymentMethod = this.getAttribute('data-method');
+                paymentDetails.style.display = 'block';
+                
+                // অটো ফিল পেমেন্ট নাম্বার
+                if (selectedPaymentMethod === 'bkash') {
+                    document.getElementById('paymentNumber').placeholder = "bKash নম্বর (01XXXXXXXXX)";
+                } else if (selectedPaymentMethod === 'nagad') {
+                    document.getElementById('paymentNumber').placeholder = "Nagad নম্বর (01XXXXXXXXX)";
+                } else if (selectedPaymentMethod === 'binance') {
+                    document.getElementById('paymentNumber').placeholder = "বাইন্যান্স ইউজার আইডি";
+                } else {
+                    document.getElementById('paymentNumber').placeholder = "মোবাইল নম্বর";
+                }
+            });
+        });
+
+
+
+
+
+        // অর্ডার সাবমিট ফাংশন
+function submitOrder() {
+    const email = document.getElementById('email').value;
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    const paymentDetails = document.getElementById('paymentDetails').value;
+
+    // পেমেন্ট ভ্যালিডেশন
+    if (!validatePayment(paymentMethod, paymentDetails)) {
+        showMessage("অবৈধ পেমেন্ট তথ্য!", "error");
+        return;
+    }
+
+    // অর্ডার ডাটা প্রস্তুত করুন
+    const orderData = {
+        items: cartData,
+        total: calculateTotal(),
+        customerEmail: email,
+        paymentMethod: paymentMethod,
+        timestamp: new Date().toISOString()
+    };
+
+    // জিমেইলে নোটিফিকেশন পাঠান (এখানে EmailJS ব্যবহার করা হলো)
+    sendEmailNotification(orderData);
+
+    // অর্ডার কনফার্মেশন দেখান
+    showMessage("অর্ডার সফলভাবে জমা হয়েছে!", "success");
+    clearCart();
+}
+
+// পেমেন্ট ভ্যালিডেশন ফাংশন
+function validatePayment(method, details) {
+    if (method === "bkash" && !/^01[3-9]\d{8}$/.test(details)) {
+        return false;
+    }
+    if (method === "card" && !/^\d{16}$/.test(details)) {
+        return false;
+    }
+    return true;
+}
+
+// EmailJS দিয়ে ইমেইল পাঠানোর ফাংশন
+function sendEmailNotification(orderData) {
+    // EmailJS কনফিগারেশন (আপনার নিজের আইডি দিয়ে রিপ্লেস করুন)
+    emailjs.init("YOUR_USER_ID");
+    
+    const templateParams = {
+        to_email: "yourbusiness@gmail.com", // আপনার ব্যবসার ইমেইল
+        from_name: "Website Order",
+        order_details: JSON.stringify(orderData, null, 2),
+        total_amount: orderData.total
+    };
+
+    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
+        .then(response => console.log("ইমেইল পাঠানো হয়েছে!", response))
+        .catch(error => console.error("ইমেইল পাঠাতে সমস্যা:", error));
+}
+
+// HTML স্ট্রাকচার (চেকআউট ফর্ম)
+/*
+<div id="checkoutForm">
+    <h3>চেকআউট</h3>
+    <input type="email" id="email" placeholder="আপনার ইমেইল" required>
+    <select id="paymentMethod" required>
+        <option value="">পেমেন্ট মেথড নির্বাচন করুন</option>
+        <option value="bkash">bKash</option>
+        <option value="card">ক্রেডিট কার্ড</option>
+    </select>
+    <input type="text" id="paymentDetails" placeholder="পেমেন্ট তথ্য" required>
+    <button onclick="submitOrder()">অর্ডার কনফার্ম করুন</button>
+    <div id="messageBox"></div>
+</div>
+*/
+
+// মেসেজ শো করার ফাংশন
+function showMessage(message, type) {
+    const messageBox = document.getElementById('messageBox');
+    messageBox.innerHTML = message;
+    messageBox.className = `message ${type}`;
+    setTimeout(() => messageBox.className = "message", 3000);
+}
+
+        // পেমেন্ট সাবমিট
+        submitPayment.addEventListener('click', function() {
+            const paymentNumber = document.getElementById('paymentNumber').value.trim();
+            const transactionId = document.getElementById('transactionId').value.trim();
+            const amount = document.getElementById('amount').value.trim();
+            
+            if (!selectedPaymentMethod) {
+                alert('দয়া করে একটি পেমেন্ট মেথড সিলেক্ট করুন');
+                return;
+            }
+            
+            if (!paymentNumber) {
+                alert('দয়া করে আপনার মোবাইল নম্বর বা আইডি প্রদান করুন');
+                return;
+            }
+            
+            if (!transactionId) {
+                alert('দয়া করে ট্রানজেকশন আইডি প্রদান করুন');
+                return;
+            }
+            
+            if (!amount || isNaN(amount) || amount <= 0) {
+                alert('দয়া করে সঠিক পরিমাণ প্রদান করুন');
+                return;
+            }
+            
+            // এখানে সাধারণত সার্ভারে ডাটা সাবমিট করা হবে
+            alert(
+                `অর্ডার সফলভাবে সম্পন্ন হয়েছে!\n\n` +
+                `পণ্য: ${selectedProduct.title}\n` +
+                `মূল্য: ৳${amount}\n` +
+                `পেমেন্ট মেথড: ${selectedPaymentMethod}\n` +
+                `আপনার নম্বর: ${paymentNumber}\n` +
+                `ট্রানজেকশন আইডি: ${transactionId}\n\n` +
+                `আমাদের হেল্পলাইন নম্বরে স্ক্রিনশট পাঠান: 01403407381`
+            );
+            
+            closePaymentModal();
+        });
+
+        // মোডাল ক্লোজ ইভেন্ট
+        closeModal.addEventListener('click', closePaymentModal);
+        
+        // মোডালের বাইরে ক্লিক করলে ক্লোজ হবে
+        paymentModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePaymentModal();
+            }
+        });
+
+        // নেভিগেশন আইটেম ক্লিক ইভেন্ট
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // সক্রিয় ক্লাস আপডেট
+                navItems.forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                // ক্যাটাগরি আপডেট
+                currentCategory = this.getAttribute('data-category');
+                displayProducts(currentCategory);
+            });
+        });
+
+        // ফুটার লিঙ্ক ক্লিক ইভেন্ট
+       // footerLinks.forEach(link => {
+         //   link.addEventListener('click', function(e) {
+           //     e.preventDefault();
+          //      alert('এই বিভাগটি বর্তমানে উন্নয়নাধীন আছে। শীঘ্রই আসছে!');
+          //  });
+        //});
+
+        // সার্চ ফাংশনালিটি
+        function handleSearch() {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+                displayProducts(currentCategory, searchTerm);
+            } else {
+                displayProducts(currentCategory);
+            }
+        }
+
+        // সার্চ বাটন ক্লিক ইভেন্ট
+        searchBtn.addEventListener('click', handleSearch);
+        
+        // এন্টার প্রেস ইভেন্ট
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleSearch();
+            }
+        });
+
+        // ইনিশিয়াল লোড
+        displayProducts();
+    </script>
+</body>
+</html>
